@@ -1,0 +1,147 @@
+<MainScreen>:
+
+    on_pre_leave: root.stop_motor()
+    toggle_motor_status_btn: toggle_motor_status_btn
+    motor_direction: motor_direction
+
+    FloatLayout:
+        size_hint: None, None
+
+    DPEAButton:
+        id: toggle_motor_status_btn
+        text: "Turn On"
+        size: 100, 100
+        center_x: root.width * 0.25
+        center_y: root.height * 0.9
+        color: 1, 1, 1, 1
+        on_release: root.turn_motor_on_off(self.text)
+
+    DPEAButton:
+        id: motor_direction
+        text: "CCW"
+        size: 100, 100
+        center_x: root.width * 0.5
+        center_y: root.height * 0.9
+        color: 1, 1, 1, 1
+        on_release: root.change_motor_direction(self.text)
+
+#    Label:
+#        id: joystick_values
+#        size_hint: None, None
+#        font_size: 30
+#        center_x: root.width * (root.x / 2 + .5)
+#        center_y: root.height * (root.y / 2 + .5)
+#        color: 1, 1, 1, 1
+#        bold: True
+#        outline_width: self.font_size * 0.1
+#        outline_color: 0, 0, 0
+#
+#    ImageButton:
+#        source: "thumbsup.jpeg"
+#        size: 100, 100
+#        center_x: root.width * 0.25
+#        center_y: root.height * 0.9
+#        color: random.random(), random.random(), random.random(), random.random()
+#        on_press: root.create_animation(self)
+#
+#    ImageButton:
+#        text: "Next Page"
+#        source: "thumbsup.jpeg"
+#        size: 150, 100
+#        center_x: root.width * 0.5
+#        center_y: root.height * 0.1
+#        on_release: root.change_screen_to_myNewScreen()
+#
+#    Slider:
+#        orientation: "horizontal"
+#        size_hint: None, None
+#        outline_width: self.font_size * 0.1
+#        outline_color: 0, 0, 0
+#        font_size: 30
+#        min: 0
+#        max: 100
+#        value: 50
+#        center_x: root.width * 0.75
+#        center_y: root.height * 0.7
+#        on_value: label_linked_to_slider.text = "Slider Value: " + str(int(self.value))
+#
+#    Label:
+#        id: label_linked_to_slider
+#        size_hint: None, None
+#        font_size: 30
+#        center_x: root.width * 0.5
+#        center_y: root.height * 0.25
+#        color: 1, 1, 1, 1
+#        bold: True
+#        outline_width: self.font_size * 0.1
+#        outline_color: 0, 0, 0
+#
+#    DPEAButton:
+#        id: counter_btn
+#        text: '0'
+#        size: 100, 100
+#        center_x: root.width * 0.25
+#        center_y: root.height * 0.7
+#        color: random.random(), random.random(), random.random(), random.random()
+#        on_press: root.counter()
+#
+#    DPEAButton:
+#        id: toggle_label_btn
+#        text: 'Toggle Motor'
+#        size: 100, 100
+#        center_x: root.width * 0.5
+#        center_y: root.height * 0.7
+#        color: random.random(), random.random(), random.random(), random.random()
+#        on_press: root.toggle_label_text()
+#
+#    Label:
+#        id: toggling_label
+#        text: "Motor Off"
+#        size_hint: None, None
+#        font_size: 30
+#        center_x: root.width * 0.5
+#        center_y: root.height * 0.3
+#        color: 1, 1, 1, 1
+#        bold: True
+#        outline_width: self.font_size * 0.1
+#        outline_color: 0, 0, 0
+#
+#
+#    DPEAButton:
+#        id: test_button
+#        text: 'test'
+#        size: 100, 100
+#        center_x: root.width * 0.75
+#        center_y: root.height * 0.5
+#        color: random.random(), random.random(), random.random(), random.random()
+#        on_press: root.pressed()
+#
+#    DPEAButton:
+#        id: tog_btn
+#        text: "Off"
+#        size: 100, 100
+#        center_x: root.width * 0.5
+#        center_y: root.height * 0.5
+#        color: random.random(), random.random(), random.random(), random.random()
+#        on_press: root.toggle()
+#
+#    DPEAButton:
+#        text: "test2"
+#        size: 100, 100
+#        center_x: root.width * 0.25
+#        center_y: root.height * 0.5
+#        color: random.random(), random.random(), random.random(), random.random()
+#        on_press: root.pressed()
+#
+#    SelfUpdatingLabel:
+#        id: time_label
+#        size_hint: None, None
+#        font_size: 30
+#        update_property: lambda: time.now().strftime("%Y-%m-%d %I:%M:%S %p")
+#        update_property_parameters: None
+#        center_x: root.width * 0.5
+#        center_y: root.height * 0.35
+#        color: 1, 1, 1, 1
+#        bold: True
+#        outline_width: self.font_size * 0.1
+#        outline_color: 0, 0, 0
