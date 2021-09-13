@@ -7,8 +7,6 @@ import RPi.GPIO as GPIO
 from pidev.stepper import stepper
 from Slush.Devices import L6470Registers
 
-
-
 os.environ['DISPLAY'] = ":0.0"
 # os.environ['KIVY_WINDOW'] = 'sdl2'
 
@@ -50,23 +48,23 @@ Window.clearcolor = (0, 0, 0, 0)
 class MainScreen(Screen):
     def __init__(self, **kwargs):
         Builder.load_file("main.kv")
+
         super(MainScreen, self).__init__(**kwargs)
         self.m1 = stepper(port=1, micro_steps=32, hold_current=20, run_current=20, accel_current=20,
                           deaccel_current=20,
                           steps_per_unit=200, speed=2)
         self.spi = spidev.SpiDev()
+        self.m_dir = 0
 
     def turn_motor_on_off(self, text):
         toggle_motor_status_btn = ObjectProperty(None)
         if text == "Turn On":
-            self.m1.go_until_press(0, 6400)
-            print("On")
+            self.m1.go_until_press(self.m_dir, 6400)
             self.toggle_motor_status_btn.text = "Turn Off"
         else:
             self.m1.free_all()
             self.spi.close()
             # GPIO.cleanup()
-            print("Off")
             self.toggle_motor_status_btn.text = "Turn On"
 
     def change_motor_direction(self, dir):
@@ -75,17 +73,27 @@ class MainScreen(Screen):
             self.m1.stop()
             if dir == "CW":
                 self.motor_direction.text = "CCW"
+                self.m_dir = 0
                 self.m1.go_until_press(0, 6400)
             else:
                 self.motor_direction.text = "CW"
+                self.m_dir = 1
                 self.m1.go_until_press(1, 6400)
 
+    def change_speed(self, value):
+        self.m1.setMinSpeed(value)
+        print(value)
+        return
 
     def stop_motor(self):
         self.m1.stop()
         self.m1.free_all()
         self.spi.close()
         GPIO.cleanup()
+
+    def exit_program(self):
+        self.stop_motor()
+        quit()
 
 
 Builder.load_file('main.kv')

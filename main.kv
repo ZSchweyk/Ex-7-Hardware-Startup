@@ -1,6 +1,5 @@
 <MainScreen>:
 
-    on_pre_leave: root.stop_motor()
     toggle_motor_status_btn: toggle_motor_status_btn
     motor_direction: motor_direction
 
@@ -24,6 +23,28 @@
         center_y: root.height * 0.9
         color: 1, 1, 1, 1
         on_release: root.change_motor_direction(self.text)
+
+    Slider:
+        orientation: "horizontal"
+        size_hint: None, None
+        outline_width: self.font_size * 0.1
+        outline_color: 0, 0, 0
+        font_size: 30
+        min: 0
+        max: 100
+        value: 50
+        center_x: root.width * 0.75
+        center_y: root.height * 0.9
+        on_value: root.change_speed(self.value)
+
+    DPEAButton:
+        id: close_window
+        text: "Close"
+        size: 100, 100
+        center_x: root.width * 0.9
+        center_y: root.height * 0.2
+        color: 1, 1, 1, 1
+        on_release: root.exit_program()
 
 #    Label:
 #        id: joystick_values
