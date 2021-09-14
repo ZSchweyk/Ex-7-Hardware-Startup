@@ -1,5 +1,6 @@
 <MainScreen>:
 
+    speed_value: speed_value
     toggle_motor_status_btn: toggle_motor_status_btn
     motor_direction: motor_direction
 
@@ -22,29 +23,39 @@
         center_x: root.width * 0.5
         center_y: root.height * 0.9
         color: 1, 1, 1, 1
-        on_release: root.change_motor_direction(self.text)
+        on_release: root.change_motor_direction()
 
     Slider:
+        id: speed_value
         orientation: "horizontal"
         size_hint: None, None
         outline_width: self.font_size * 0.1
         outline_color: 0, 0, 0
         font_size: 30
+        width: 300
         min: 0
         max: 100
         value: 50
         center_x: root.width * 0.75
         center_y: root.height * 0.9
-        on_value: root.change_speed(self.value)
+        on_value: root.change_speed()
 
     DPEAButton:
-        id: close_window
         text: "Close"
         size: 100, 100
         center_x: root.width * 0.9
         center_y: root.height * 0.2
         color: 1, 1, 1, 1
         on_release: root.exit_program()
+
+    DPEAButton:
+        text: "Sequence"
+        size: 100, 100
+        center_x: root.width * 0.5
+        center_y: root.height * 0.7
+        color: 1, 1, 1, 1
+        on_release: root.run_sequence()
+
 
 #    Label:
 #        id: joystick_values

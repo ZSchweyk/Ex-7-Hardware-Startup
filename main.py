@@ -52,37 +52,58 @@ class MainScreen(Screen):
         super(MainScreen, self).__init__(**kwargs)
         self.m1 = stepper(port=1, micro_steps=32, hold_current=20, run_current=20, accel_current=20,
                           deaccel_current=20,
-                          steps_per_unit=200, speed=2)
+                          steps_per_unit=200, speed=8)
         self.spi = spidev.SpiDev()
         self.m_dir = 0
+        speed_value = ObjectProperty(None)
+        self.motor_speed = lambda speed: 80 * speed / 100 * self.m1.speed
+        self.motor_status = False
+
+    def is_motor_on(self):
+        """
+        Motor is considered on if it is not closed (self.spi.close()), regardless of its speed (can be zero).
+
+        Had to make this method because self.m1.isBusy() tests if the motor is moving, rather than if its not closed.
+
+        :return: True or False
+        """
+        return self.motor_status and self.m1.speed >= 0
+
+    def move_motor(self):
+        self.m1.go_until_press(self.m_dir, int(self.motor_speed(self.speed_value.value)))
 
     def turn_motor_on_off(self, text):
         toggle_motor_status_btn = ObjectProperty(None)
         if text == "Turn On":
-            self.m1.go_until_press(self.m_dir, 6400)
+            self.move_motor()
             self.toggle_motor_status_btn.text = "Turn Off"
+            self.motor_status = True
         else:
             self.m1.free_all()
             self.spi.close()
-            # GPIO.cleanup()
             self.toggle_motor_status_btn.text = "Turn On"
+            self.motor_status = False
 
-    def change_motor_direction(self, dir):
-        if self.m1.isBusy():
+    def change_motor_direction(self):
+        if self.is_motor_on():
             motor_direction = ObjectProperty(None)
             self.m1.stop()
-            if dir == "CW":
+            if self.m_dir == 1:
                 self.motor_direction.text = "CCW"
                 self.m_dir = 0
-                self.m1.go_until_press(0, 6400)
             else:
                 self.motor_direction.text = "CW"
                 self.m_dir = 1
-                self.m1.go_until_press(1, 6400)
+            self.move_motor()
 
-    def change_speed(self, value):
-        self.m1.setMinSpeed(value)
-        print(value)
+    def change_speed(self):
+        # m.set_speed(.5)
+        # m.relative_move(10)
+        if self.is_motor_on():
+            self.m1.stop()
+            self.move_motor()
+
+    def run_sequence(self):
         return
 
     def stop_motor(self):

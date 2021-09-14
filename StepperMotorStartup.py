@@ -191,6 +191,8 @@ s0.free_all()
 spi.close()
 GPIO.cleanup()
 
+s0.set_speed()
+
 # And if you are need to reboot your RPi or you are done working for the day and want to shutdown
 # the next commands will be helpful
 # reboot the system
