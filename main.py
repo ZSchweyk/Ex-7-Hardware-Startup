@@ -104,16 +104,37 @@ class MainScreen(Screen):
             self.move_motor()
 
     def run_sequence(self):
+        sequence_btn = ObjectProperty(None)
+        position_txt = ObjectProperty(None)
+        self.m1.stop()
+        self.position_txt.text = str(self.m1.get_position_in_units())
+        self.m1.set_speed(1)
+        self.m1.relative_move(15)
+        self.position_txt.text = str(self.m1.get_position_in_units())
+        time.sleep(10)
+        self.m1.set_speed(5)
+        self.m1.relative_move(10)
+        self.position_txt.text = str(self.m1.get_position_in_units())
+        time.sleep(8)
+        self.m1.goHome()
+        time.sleep(30)
+        self.position_txt.text = str(self.m1.get_position_in_units())
+        self.m1.set_speed(8)
+        self.m1.relative_move(-100)
+        self.position_txt.text = str(self.m1.get_position_in_units())
+        time.sleep(10)
+        self.m1.goHome()
+        self.position_txt.text = str(self.m1.get_position_in_units())
         return
 
-    def stop_motor(self):
+    def close_motor(self):
         self.m1.stop()
         self.m1.free_all()
         self.spi.close()
         GPIO.cleanup()
 
     def exit_program(self):
-        self.stop_motor()
+        self.close_motor()
         quit()
 
 

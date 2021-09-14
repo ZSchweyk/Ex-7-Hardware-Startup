@@ -1,5 +1,7 @@
 <MainScreen>:
 
+    sequence_btn: sequence_btn
+    position_txt: position_txt
     speed_value: speed_value
     toggle_motor_status_btn: toggle_motor_status_btn
     motor_direction: motor_direction
@@ -49,12 +51,24 @@
         on_release: root.exit_program()
 
     DPEAButton:
-        text: "Sequence"
+        id: sequence_btn
+        text: "Run Seq."
         size: 100, 100
         center_x: root.width * 0.5
         center_y: root.height * 0.7
         color: 1, 1, 1, 1
         on_release: root.run_sequence()
+
+    Label:
+        id: position_txt
+        text: ""
+        size_hint: None, None
+        font_size: 30
+        center_x: root.width * 0.75
+        center_y: root.height * 0.7
+        color: 1, 1, 1, 1
+        outline_width: self.font_size * 0.1
+        outline_color: 0, 0, 0
 
 
 #    Label:
