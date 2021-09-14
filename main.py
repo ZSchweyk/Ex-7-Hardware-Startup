@@ -61,7 +61,7 @@ class MainScreen(Screen):
 
     def is_motor_on(self):
         """
-        Motor is considered on if it is not closed (self.spi.close()), regardless of its speed (can be zero).
+        Motor is considered on if its not closed (self.spi.close()), regardless of its speed (can be zero).
 
         Had to make this method because self.m1.isBusy() tests if the motor is moving, rather than if its not closed.
 
@@ -126,6 +126,7 @@ class MainScreen(Screen):
         self.m1.goHome()
         self.position_txt.text = str(self.m1.get_position_in_units())
         return
+
 
     def close_motor(self):
         self.m1.stop()
