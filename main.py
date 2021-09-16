@@ -127,7 +127,6 @@ class MainScreen(Screen):
         self.position_txt.text = str(self.m1.get_position_in_units())
         return
 
-
     def close_motor(self):
         self.m1.stop()
         self.m1.free_all()

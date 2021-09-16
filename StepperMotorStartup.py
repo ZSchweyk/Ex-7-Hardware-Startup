@@ -30,7 +30,7 @@ s0.get_position_in_units()
 # move stepper connected to port 0, 5 rotations counter-clockwise
 s0.start_relative_move(-5)
 
-# get current position and print it to the screen
+# get current position and print ist to the screen
 s0.get_position_in_units()
 # note we are now back at "home"
 
